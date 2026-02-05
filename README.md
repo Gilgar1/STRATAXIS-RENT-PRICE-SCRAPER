@@ -2,23 +2,25 @@
 
 **Production-grade rental market intelligence pipeline for Douala & Yaoundé (2020-2026)**
 
-## 📊 Overview
+## Overview
 
 This system collects, normalizes, and aggregates rental price data from 30+ public sources across Cameroon to provide investor-grade market intelligence.
 
 ### Capabilities
 
-- ✅ Multi-source scraping (portals, classifieds, agencies)
-- ✅ Housing type classification (Studio → Villa)
-- ✅ Neighborhood normalization
-- ✅ Price parsing (handles "150k", "1.2M/year", multiple currencies)
-- ✅ Date extraction (2020-2026 coverage)
-- ✅ Intelligent deduplication
-- ✅ Outlier removal (IQR-based)
-- ✅ Investor-grade metrics (median, p25, p75, volatility)
-- ✅ CSV + JSON export
+- Multi-source scraping (portals, classifieds, agencies)
+- Housing type classification (Studio to Villa)
+- Neighborhood normalization
+- Price parsing (handles "150k", "1.2M/year", multiple currencies)
+- Date extraction (2020-2026 coverage)
+- Intelligent deduplication
+- Outlier removal (IQR-based)
+- Investor-grade metrics (median, p25, p75, volatility)
+- CSV + JSON export
 
-## 🚀 Quick Start
+## Quick Start
+
+### Manual Run (One-Time Scrape)
 
 ```bash
 # 1. Install dependencies
@@ -28,7 +30,26 @@ pip install -r requirements.txt
 python main.py
 ```
 
-## 📁 Project Structure
+### Automated Monthly Scraping (Windows Task Scheduler)
+
+Set up the scraper to run automatically on the 1st of each month:
+
+```bash
+# 1. Test the batch script first
+run_monthly_scrape_with_archive.bat
+
+# 2. Follow the setup guide
+See: TASK_SCHEDULER_SETUP_GUIDE.md (detailed step-by-step)
+Or:  QUICK_SETUP_REFERENCE.md (quick reference)
+```
+
+**Features of Automated Scraping:**
+- Runs on the 1st of each month automatically
+- Archives outputs by year/month for historical tracking
+- Creates timestamped summaries
+- No manual intervention needed (computer must be on/wake-enabled)
+
+## Project Structure
 
 ```
 STRATAXIS-RENT-PRICE-SCRAPER/
@@ -42,7 +63,7 @@ STRATAXIS-RENT-PRICE-SCRAPER/
 └── main.py              # Orchestration script
 ```
 
-## 📤 Outputs
+## Outputs
 
 ### 1. CSV (`outputs/rental_intelligence.csv`)
 Analysis-ready format with columns:
@@ -70,14 +91,14 @@ API-ready hierarchical structure:
 }
 ```
 
-## 🎯 Data Sources
+## Data Sources
 
 - **Portals**: Mapiole, Koutchoumi, Keur Immo, Geloka, HomeCM, etc.
 - **Classifieds**: Jumia, Coin Afrique, Expat, Afribaba
 - **Agencies**: SECPE, Tesla, Diamond Realty, A2M, etc.
 - **Total**: 30+ sources
 
-## 🏠 Housing Types
+## Housing Types
 
 - Studio
 - 1-bedroom apartment
@@ -86,13 +107,13 @@ API-ready hierarchical structure:
 - Villa / house
 - Shared housing
 
-## 🌍 Coverage
+## Coverage
 
 - **Cities**: Douala, Yaoundé
 - **Period**: 2020-2026
 - **Granularity**: Neighborhood level
 
-## ⚙️ Configuration
+## Configuration
 
 ### Add neighborhoods
 Edit `config/neighborhoods.yaml` to add/update neighborhood variants.
@@ -103,14 +124,14 @@ Edit `config/sources.yaml` to add new websites.
 ### Customize housing types
 Edit `config/housing_types.yaml` to adjust classification keywords.
 
-## 📊 Data Quality
+## Data Quality
 
 - **Outlier Removal**: IQR-based filtering per housing type
 - **Deduplication**: Signature-based (city + neighborhood + type + price)
 - **Confidence Flags**: `high`, `medium`, `low` based on sample size & volatility
 - **Quality Metrics**: Tracks which listings have price, size, neighborhood, etc.
 
-## 🔧 Customization
+## Customization
 
 ### Adjust scraping delay
 In `scrapers/base_scraper.py`, modify `delay_range` parameter.
@@ -121,7 +142,7 @@ In `pipeline/aggregator.py`, modify IQR multiplier (default 1.5).
 ### Add custom scraper
 Extend `BaseScraper` class for site-specific logic.
 
-## 📝 Logs
+## Logs
 
 All execution logs are saved to `logs/scraper_TIMESTAMP.log` with:
 - Scraping progress
@@ -129,7 +150,7 @@ All execution logs are saved to `logs/scraper_TIMESTAMP.log` with:
 - Normalization issues
 - Aggregation statistics
 
-## ⚠️ Legal & Ethics
+## Legal & Ethics
 
 - Only scrapes publicly visible listings
 - Respectful rate limiting (2-4 sec delays)
@@ -137,14 +158,14 @@ All execution logs are saved to `logs/scraper_TIMESTAMP.log` with:
 - No private data access
 - Complies with robots.txt
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Python 3.8+**
 - **Libraries**: requests, BeautifulSoup, pandas, PyYAML
 - **Parsing**: lxml, dateutil
 - **User-Agent rotation**: fake-useragent
 
-## 📈 Use Cases
+## Use Cases
 
 - Rental yield calculations
 - Neighborhood affordability analysis
@@ -152,7 +173,7 @@ All execution logs are saved to `logs/scraper_TIMESTAMP.log` with:
 - Development feasibility studies
 - Portfolio risk assessment
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Low listing counts
 - Some sites may have changed structure

@@ -43,3 +43,6 @@ Thumbs.db
 # data/cleaned/*.json
 # outputs/*.csv
 # outputs/*.json
+
+# Monthly archives (keep out of git - can be very large)
+outputs/monthly_archives/
